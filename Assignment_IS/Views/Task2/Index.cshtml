@@ -1,0 +1,164 @@
+﻿@model Task2Model
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="row px-5">
+    <div class="col-sm-6">
+
+        <h5>Create new <strong>Car</strong></h5>
+        <hr />
+        <form action="/Task2/CreateCar" method="post">
+            <div class="row">
+                <div class="col-6">
+                    <div class="form-group">
+                        <label for="model">Model</label>
+                        <input type="text" class="form-control" id="model" name="model" placeholder="Enter model" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="speed">Engine Speed</label>
+                        <input type="number" min="0" max="1000" class="form-control" id="speed" name="speed" placeholder="Enter speed" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="power">Engine Power</label>
+                        <input type="number" min="0" max="1000" class="form-control" id="power" name="power" placeholder="Enter power" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="weight">Cargo Weight</label>
+                        <input type="number" min="0" max="10000" class="form-control" id="weight" name="weight" placeholder="Enter weight" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Choose Cargo Type</label>
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="custom-control custom-radio">
+                                    <input type="radio" class="custom-control-input" id="cargoType1" value="fragile" name="cargoType" checked>
+                                    <label class="custom-control-label" for="cargoType1">Fragile</label>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="custom-control custom-radio">
+                                    <input type="radio" class="custom-control-input" id="cargoType2" value="flamable" name="cargoType">
+                                    <label class="custom-control-label" for="cargoType2">Flamable</label>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="form-group">
+                        <label for="tire1Presure">Tire1 Presure</label>
+                        <input type="number" value="1.0" step="0.1" min="0" max="10" class="form-control" id="tire1Presure" name="tire1Presure" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="tire2Presure">Tire2 Presure</label>
+                        <input type="number" value="1.0" step="0.1" min="0" max="10" class="form-control" id="tire2Presure" name="tire2Presure" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="tire3Presure">Tire3 Presure</label>
+                        <input type="number" value="1.0" step="0.1" min="0" max="10" class="form-control" id="tire3Presure" name="tire3Presure" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="tire4Presure">Tire4 Presure</label>
+                        <input type="number" value="1.0" step="0.1" min="0" max="10" class="form-control" id="tire4Presure" name="tire4Presure" required>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="form-group">
+                        <label for="tire1Age">Tire1 Age</label>
+                        <input type="number" min="0" max="10" class="form-control" id="tire1Age" name="tire1Age" value="1" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="tire2Age">Tire2 Age</label>
+                        <input type="number" min="0" max="10" class="form-control" id="tire2Age" name="tire2Age" value="1" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="tire3Age">Tire3 Age</label>
+                        <input type="number" min="0" max="10" class="form-control" id="tire3Age" name="tire3Age" value="2" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="tire4Age">Tire4 Age</label>
+                        <input type="number" min="0" max="10" class="form-control" id="tire4Age" name="tire4Age" value="2" required>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center">
+                <button type="submit" class="btn btn-primary">CREATE CAR</button>
+            </div>            
+        </form>
+    </div>
+    <div class="col-sm-6">
+        <h5>List of all cars</h5>
+        <hr />
+        <div class="list-content">
+            @foreach (var car in Model.Cars)
+            {
+                <div class="list-group">
+                    <a class="list-group-item d-inline-block">                        
+                        <span style="display: inline-block; width: 200px;">@car.Model</span>
+                        <span class="px-2">@car.Cargo.CargoType.ToString()</span>
+                        <span class="float-right">
+                            power
+                            <span class="badge badge-pill badge-dark">@car.Engine.Power</span>
+                        </span>
+                    </a>
+                </div>
+            }
+        </div>
+        <hr />
+        <div class="row">
+            <div class="col-6">
+                <h5>Fragile Cars</h5>
+                <div class="list-content">
+                    @foreach (var car in Model.FragileCars)
+                    {
+                        <div class="list-group">
+                            <a class="list-group-item d-inline-block">
+                                @car.Model
+                                <span class="float-right">
+                                    @foreach (var tire in car.Tires)
+                                    {
+                                        string className = "badge badge-pill";
+                                        if (tire.Presure < 1)
+                                        {
+                                            className += " badge-danger";
+                                        }
+                                        else
+                                        {
+                                            className += " badge-dark";
+                                        }
+
+                                        <span class="@(className)">@tire.Presure</span>
+                                    }
+                                </span> 
+                            </a>
+                        </div>
+                    }
+                </div>
+            </div>
+            <div class="col-6">
+                <h5>Flamable Cars</h5>
+                @foreach (var car in Model.FlamableCars)
+                {
+                    <div class="list-group">
+                        <a class="list-group-item d-inline-block">
+                            @car.Model
+                            <span class="float-right">
+                                power
+                                <span class="badge badge-pill badge-danger">@car.Engine.Power</span>
+                            </span>
+                        </a>
+                    </div>
+                }
+            </div>
+        </div>
+        
+    </div>
+</div>
+
+<script>
+    const pageLink = document.getElementById("task2");
+    pageLink.classList.add("current");
+</script>

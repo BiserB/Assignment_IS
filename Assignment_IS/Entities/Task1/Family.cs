@@ -19,7 +19,7 @@ namespace Assignment_IS.Entities.Task1
 
         private List<Person> Members { get; set; }
 
-        public Guid Id { get; set; }
+        public Guid Id { get; private set; }
 
         private string familyName;
 

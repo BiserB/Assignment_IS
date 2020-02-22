@@ -20,10 +20,10 @@ namespace Assignment_IS.Entities.Task1
             this.Age = age;
         }
         
-        public Guid Id { get; set; }
+        public Guid Id { get; private set; }
 
-        public string Name { get; set; }
+        public string Name { get; private set; }
 
-        public int Age { get; set; }
+        public int Age { get; private set; }
     }
 }

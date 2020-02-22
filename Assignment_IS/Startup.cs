@@ -30,6 +30,7 @@ namespace Assignment_IS
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             services.AddScoped<Task1Service>();
+            services.AddScoped<Task2Service>();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
@@ -44,6 +45,7 @@ namespace Assignment_IS
             }
 
             Task1Repo.SeedData();
+            Task2Repo.SeedData();
 
             app.UseStaticFiles();
             app.UseCookiePolicy();

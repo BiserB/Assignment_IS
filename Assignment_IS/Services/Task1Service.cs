@@ -75,11 +75,11 @@ namespace Assignment_IS.Services
 
             string text = File.ReadAllText(fullPath);
 
-            Person[] persons = JsonConvert.DeserializeObject<Person[]>(text);
+            PersonDto[] personDtos = JsonConvert.DeserializeObject<PersonDto[]>(text);
 
-            foreach (var person in persons)
+            foreach (var dto in personDtos)
             {
-                Task1Repo.AddPerson(person);
+                Task1Repo.AddPerson(new Person(dto.Name, dto.Age));
             }
         }
     }

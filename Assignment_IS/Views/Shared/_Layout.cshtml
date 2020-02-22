@@ -28,11 +28,11 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                     <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                        <li class="nav-item px-5" id="task1">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Task1" asp-action="Index">Task 1</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                        <li class="nav-item px-5" id="task2">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Task2" asp-action="Index">Task 2</a>
                         </li>
                     </ul>
                 </div>
@@ -64,7 +64,7 @@
                 integrity="sha384-xrRywqdh3PHs8keKZN+8zzc5TX0GRTLCcmivcbNJWm2rs5C8PRhcEn3czEjhAO9o">
         </script>
     </environment>
-    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>    
 
     @RenderSection("Scripts", required: false)
 </body>
