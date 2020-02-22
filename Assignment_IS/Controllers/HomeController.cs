@@ -5,6 +5,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Assignment_IS.Models;
+using Assignment_IS.Entities.Task1;
+using Assignment_IS.Services;
+using Assignment_IS.Models.Output;
+using Assignment_IS.Models.Input;
 
 namespace Assignment_IS.Controllers
 {

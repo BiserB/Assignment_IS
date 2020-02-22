@@ -1,0 +1,113 @@
+﻿@model Task1Model
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="row px-5">
+    <div class="col-sm-3">
+
+        <h5>Create new <strong>Person</strong></h5>
+        <hr />
+        <form action="/Task1/CreatePerson" method="post">
+            <div class="form-group">
+                <label for="personName">Person Name</label>
+                <input type="text" class="form-control" id="name" name="name" aria-describedby="personNameHelp" placeholder="Enter person name">
+                <small id="personNameHelp" class="form-text text-muted">Not required</small>
+            </div>
+            <div class="form-group">
+                <label for="personAge">Person Age</label>
+                <input type="number" min="0" max="200" class="form-control" id="age" name="age" aria-describedby="personAgeHelp" placeholder="Enter age">
+                <small id="personAgeHelp" class="form-text text-muted">Not required</small>
+            </div>
+            <button type="submit" class="btn btn-primary">CREATE PERSON</button>
+        </form>
+    </div>
+    <div class="col-sm-3">
+        <h5>List of all persons</h5>
+        <hr />
+        <div class="list-content">
+            @foreach (var person in Model.Persons)
+            {
+                <div class="list-group">
+                    <a class="list-group-item d-inline-block">
+                        @person.Name
+                        <span class="float-right">
+                            age
+                            <span class="badge badge-pill badge-dark">@person.Age</span>
+                        </span>
+                    </a>
+                </div>
+            }
+        </div>
+    </div>
+    <div class="col-sm-2">
+
+        <h5>Create new <strong>Family</strong></h5>
+        <hr />
+        <form action="/Task1/CreateFamily" method="post">
+            <div class="form-group">
+                <label for="familyName">Family Name</label>
+                <input type="text" required class="form-control" id="familyName" name="familyName" aria-describedby="familyNameHelp" placeholder="Enter family name">
+                <small id="familyNameHelp" class="form-text text-muted">* Required</small>
+            </div>
+            <button type="submit" class="btn btn-primary">CREATE FAMILY</button>
+        </form>
+    </div>
+    <div class="col-sm-4">
+        <h5>List of all families</h5>
+        <hr />
+        <div class="list-content">
+            <div class="text-center">The oldest member</div>
+            @foreach (var family in Model.Families)
+            {
+            <div class="list-group">
+                <a href=@("Task1/ChooseFamily?id=" + family.Id) class="list-group-item d-inline-block">
+                    @family.FamilyName
+                    <span class="float-right">                        
+                        <span class="badge badge-pill badge-dark">@family.MembersCount </span>
+                    </span>
+                    <span class="float-right px-5">@(family.GetOldestMember() != null ? family.GetOldestMember().Name : "-------------------")</span>
+                </a>
+                
+            </div>
+            }
+        </div>
+    </div>
+</div>
+<hr />
+<div class="row px-5">
+    <div class="col-sm-6">
+        <div class="row">
+            <div class="col-sm-6">
+                <h5>Get persons older than 30 years</h5>
+                <form action="/Task1/GetAllOverThirty" method="get">
+                    <button type="submit" class="btn btn-primary">Get</button>
+                </form>
+                <hr />
+                <h6>Add persons from file located in assembly directory</h6>
+                <form action="/Task1/AddFromFile" method="post">
+                    <button type="submit" class="btn btn-primary">Add</button>
+                </form>
+            </div>
+            <div class="col-sm-6">
+                <div class="list-content">
+                    @foreach (var person in Model.OlderThanThirty)
+                    {
+                        <div class="list-group">
+                            <a class="list-group-item d-inline-block">
+                                @person.Name
+                                <span class="float-right">
+                                    age
+                                    <span class="badge badge-pill badge-dark">@person.Age</span>
+                                </span>
+                            </a>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6">
+
+    </div>
+</div>
