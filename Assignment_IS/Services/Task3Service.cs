@@ -109,7 +109,7 @@ namespace Assignment_IS.Services
             return true;
         }
 
-        public void Archive(string id)
+        public void Archive(Guid id)
         {
             ToDoList selected = Task3Repo.GetToDo(id);
 
@@ -119,7 +119,7 @@ namespace Assignment_IS.Services
             }
         }
 
-        public void Restore(string id)
+        public void Restore(Guid id)
         {
             ToDoList selected = Task3Repo.GetToDo(id);
 
@@ -151,24 +151,10 @@ namespace Assignment_IS.Services
         }
 
         public void EditToDoList(EditToDoListModel model)
-        {
-            Guid todoId;
-
-            if (!Guid.TryParse(model.Id, out todoId))
-            {
-                throw new ArgumentException("Invalid to-do id");
-            }
-
-            Guid creatorId;
-
-            if (!Guid.TryParse(model.UserId, out creatorId))
-            {
-                throw new ArgumentException("Invalid creator id");
-            }
-
+        {   
             User currentUser = this.GetCurrentUser();
 
-            if (currentUser.Id != creatorId)
+            if (currentUser.Id != model.UserId)
             {
                 throw new ArgumentException("Invalid creator id");
             }

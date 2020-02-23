@@ -42,9 +42,9 @@ namespace Assignment_IS.Data
             return ToDos.Where(t => t.UserId.Equals(id) && t.IsArchived).ToList().AsReadOnly();
         }
 
-        public static ToDoList GetToDo(string id)
+        public static ToDoList GetToDo(Guid id)
         {
-            return ToDos.FirstOrDefault(t => t.Id.ToString() == id);
+            return ToDos.FirstOrDefault(t => t.Id == id);
         }
 
         public static void AddToDo(ToDoList todo)

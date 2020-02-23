@@ -41,6 +41,16 @@ namespace Assignment_IS.Data
             Persons.Add(person);
         }
 
+        public static Person GetPerson(Guid personId)
+        {
+            return Persons.FirstOrDefault(p => p.Id == personId);
+        }
+
+        public static Family GetFamily(Guid familyId)
+        {
+            return Families.FirstOrDefault(f => f.Id == familyId);
+        }
+
         public static void SeedData()
         {
             List<Family> demoFamilies = new List<Family>()
@@ -69,6 +79,4 @@ namespace Assignment_IS.Data
             }
         }
     }
-
-
 }

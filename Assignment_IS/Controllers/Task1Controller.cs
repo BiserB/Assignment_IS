@@ -30,14 +30,9 @@ namespace Assignment_IS.Controllers
             if (ModelState.IsValid)
             {
                 this.task1Service.CreateNewFamily(inputModel);
-            }            
+            }
 
-            Task1Model model = new Task1Model();
-
-            model.Families = this.task1Service.GetAllFamilies();
-            model.Persons = this.task1Service.GetAllPersons();
-
-            return View("Index", model);
+            return LocalRedirect("/Task1/Index");
         }
 
         [HttpPost]
@@ -45,12 +40,7 @@ namespace Assignment_IS.Controllers
         {
             this.task1Service.CreateNewPerson(inputModel);
 
-            Task1Model model = new Task1Model();
-
-            model.Families = this.task1Service.GetAllFamilies();
-            model.Persons = this.task1Service.GetAllPersons();
-
-            return View("Index", model);
+            return LocalRedirect("/Task1/Index");
         }
 
         [HttpGet]
@@ -70,19 +60,17 @@ namespace Assignment_IS.Controllers
         {
             this.task1Service.AddPersonsFromFile();
 
-            Task1Model model = new Task1Model();
-
-            model.Families = this.task1Service.GetAllFamilies();
-            model.Persons = this.task1Service.GetAllPersons();
-
-            return View("Index", model);
+            return LocalRedirect("/Task1/Index");
         }
         
-        public IActionResult ChooseFamily(int id)
+        public IActionResult AddMember(AddMemberModel inputModel)
         {
-            Task1Model model = new Task1Model();
+            if (ModelState.IsValid)
+            {
+                this.task1Service.AddMember(inputModel);
+            }
 
-            return View("Index", model);
+            return LocalRedirect("/Task1/Index");
         }
     }
 }

@@ -90,7 +90,7 @@ namespace Assignment_IS.Controllers
         }
 
         [HttpPost]
-        public IActionResult Archive(string id)
+        public IActionResult Archive(Guid id)
         {
             this.task3Service.Archive(id);
 
@@ -98,7 +98,7 @@ namespace Assignment_IS.Controllers
         }
 
         [HttpPost]
-        public IActionResult Restore(string id)
+        public IActionResult Restore(Guid id)
         {
             this.task3Service.Restore(id);
 

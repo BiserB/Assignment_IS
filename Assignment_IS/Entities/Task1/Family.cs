@@ -51,7 +51,7 @@ namespace Assignment_IS.Entities.Task1
         {
             if (person == null)
             {
-                throw new ArgumentNullException();
+                throw new ArgumentNullException("Can not add NULL member");
             }
 
             this.Members.Add(person);

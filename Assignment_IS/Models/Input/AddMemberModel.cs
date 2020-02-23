@@ -6,15 +6,12 @@ using System.Threading.Tasks;
 
 namespace Assignment_IS.Models.Input
 {
-    public class EditToDoListModel
+    public class AddMemberModel
     {
         [Required]
-        public Guid Id { get; set; }
+        public Guid FamilyId { get; set; }
 
         [Required]
-        public Guid UserId { get; set; }
-
-        [Required]
-        public string Content { get; set; }
+        public Guid MemberId { get; set; }
     }
 }

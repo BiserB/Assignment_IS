@@ -62,6 +62,17 @@ namespace Assignment_IS.Services
             return Task1Repo.GetPersons().Where(p => p.Age > 30).ToList();
         }
 
+        public void AddMember(AddMemberModel model)
+        {
+            Person newMember = Task1Repo.GetPerson(model.MemberId);
+            Family family = Task1Repo.GetFamily(model.FamilyId);
+
+            if (newMember != null && family != null)
+            {
+                family.AddMember(newMember);
+            }
+        }
+
         public void AddPersonsFromFile()
         {
             string rootPath = this.hostingEnvironment.ContentRootPath;
