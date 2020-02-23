@@ -1,4 +1,5 @@
 ﻿using Assignment_IS.Data;
+using Assignment_IS.Infrastructure;
 using Assignment_IS.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -27,10 +28,15 @@ namespace Assignment_IS
             });
 
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddMvc(options =>
+            {
+                options.Filters.Add<ExceptionHandlerFilter>();
+            })
+            .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             services.AddScoped<Task1Service>();
             services.AddScoped<Task2Service>();
+            services.AddScoped<Task3Service>();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
@@ -46,6 +52,7 @@ namespace Assignment_IS
 
             Task1Repo.SeedData();
             Task2Repo.SeedData();
+            Task3Repo.SeedData();
 
             app.UseStaticFiles();
             app.UseCookiePolicy();

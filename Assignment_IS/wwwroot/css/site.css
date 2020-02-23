@@ -57,11 +57,20 @@ body {
 
 /*----------------------------------*/
 
-.list-content{
+.list-content {
     overflow-y: auto;
+    overflow-x: hidden;
     height: 260px;
 }
 
 .current{
     background-color: lightgreen;
 }
+
+.edit-todo{
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid gray;
+}
+
+/*---------Login--------------------*/

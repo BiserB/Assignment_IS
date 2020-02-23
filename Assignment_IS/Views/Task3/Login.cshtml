@@ -1,0 +1,174 @@
+﻿@model Task3Model
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="row px-5">
+    <div class="col-sm-6">
+        <div class="row">
+            <div class="col-sm-6">
+
+                @if (Model.CurrentUser == null || !Model.CurrentUser.IsLoggedIn)
+                {
+                    <form class="form-signin" action="/Task3/Login" method="post">
+                        <div class="text-center">
+                            <img src="~/login.png" class="mb-4 ml-auto mr-auto" alt="" width="36" height="36" />
+                        </div>
+                        <h1 class="h4 mb-3 font-weight-normal">Please sign in or <strong><a href="/Task3/Register">register</a></strong></h1>
+                        <label for="username" class="sr-only">Username</label>
+                        <input type="text" id="username" name="username" class="form-control" placeholder="Username" required="" autofocus="">
+                        <br />
+                        <label for="password" class="sr-only">Password</label>
+                        <input type="password" id="password" name="password" class="form-control" placeholder="Password" required="">
+                        <br />
+                        <div class="checkbox mb-3">
+                            <label>
+                                <input type="checkbox" value="remember-me"> Remember me
+                            </label>
+                        </div>
+                        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+                        <p class="mt-5 mb-3 text-muted">© 2020</p>
+                    </form>
+                }
+                else
+                {
+                    <div class="text-center">
+                        <img src="~/profile.png" class="mb-4 ml-auto mr-auto" alt="" width="36" height="36" />
+                    </div>
+                    <h5>Current user info</h5>
+                    <hr />
+                    <p><strong class="pr-4">Name:</strong> @Model.CurrentUser.Username</p>
+                    <p><strong class="pr-3">Loged:</strong> @Model.CurrentUser.IsLoggedIn</p>
+                    <form action="/Task3/Logout" method="post">
+                        <input type="hidden" id="id" name="id" value="@Model.CurrentUser.Id">
+                        <button class="btn btn-sm btn-secondary" type="submit">Logout</button>
+                    </form>
+                }
+
+            </div>
+            <div class="col-sm-6">
+                <h5>User list</h5>
+                <hr />
+                <div class="list-content">
+                    @foreach (var user in Model.Users)
+                    {
+                        <div class="list-group">
+                            <a class="list-group-item d-inline-block">
+                                <span style="display: inline-block; width: 120px;">@user.Username</span>
+                                <span class="float-right">
+                                    logged in
+                                    @if (@user.IsLoggedIn)
+                                    {
+                                        <span class="badge badge-pill badge-success">yes</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge badge-pill badge-dark">no</span>
+                                    }
+
+                                </span>
+                            </a>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+        <hr />
+        @if (Model.CurrentUser != null && Model.CurrentUser.IsLoggedIn)
+        {
+            <div>
+                <h5 class="text-center"> Create to-do list</h5>
+                <hr />
+                <form class="form-inline" action="/Task3/CreateToDoList" method="post">
+                    <input type="hidden" name="userId" value="@Model.CurrentUser.Id">
+                    <label for="content mr-2">Content</label>
+                    <input type="text" name="content" class="form-control" style="width: 400px;" placeholder="Enter text" required="" autofocus="">
+                    <button class="btn btn-success ml-2" type="submit">Create</button>
+                </form>
+            </div>
+        }
+
+    </div>
+
+    @if (Model.CurrentUser != null && Model.CurrentUser.IsLoggedIn)
+    {
+        <div class="col-sm-6">
+            <h5 class="text-center bg-dark p-1 text-light">My to-do list</h5>
+            <hr />
+            <div class="list-content">
+                <ul>
+                    @{int i = 0;}
+                    @foreach (var todo in Model.ToDoLists)
+                    {
+                        i += 1;
+                        <li>
+                            <div class="row">
+                                <div class="col-9">
+                                    @todo.Content
+                                </div>
+                                <div class="col-3">
+                                    <div class="row">
+                                        <p>
+                                            <button class="btn btn-sm btn-dark" type="button" data-toggle="collapse" data-target="@("#collapse" + i)" aria-expanded="false" aria-controls="collapse">
+                                                Edit
+                                            </button>
+                                        </p>
+                                        <form action="/Task3/Archive" method="post">
+                                            <input type="hidden" name="id" value="@todo.Id">
+                                            <button class="btn btn-sm btn-link" type="submit">Archive</button>
+                                        </form>
+                                    </div>
+                                </div>
+                                <div class="collapse edit-todo col-12" id="@("collapse" + i)">
+                                    <form action="/Task3/EditToDoList" method="post">
+                                        <input type="hidden" name="id" value="@todo.Id">
+                                        <input type="hidden" name="userId" value="@Model.CurrentUser.Id">
+                                        <input type="text" name="content" value="@todo.Content" style="width: 100%">
+                                        <button class="btn btn-sm btn-link float-right" type="submit">Save</button>
+                                        <button class="btn btn-sm btn-link float-right" type="button" data-toggle="collapse" data-target="@("#collapse" + i)">Cancel</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </li>
+                    }
+                </ul>
+                @if (!Model.ToDoLists.Any())
+                {
+                    <p class="text-center text-muted"> Empty </p>
+                }
+            </div>
+            <h5 class="text-center bg-dark p-1 text-light">My archived todo's</h5>
+            <hr />
+            <div class="list-content">
+                <ul>
+                    @foreach (var todo in Model.Archived)
+                    {
+                        <li>
+                            <div class="row">
+                                <div class="col-9">
+                                    @todo.Content
+                                </div>
+                                <div class="col-2">
+                                    <form action="/Task3/Restore" method="post">
+                                        <input type="hidden" name="id" value="@todo.Id">
+                                        <button class="btn btn-link float-right" type="submit">Restore</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </li>
+                    }
+                </ul>
+                @if (!Model.ToDoLists.Any())
+                {
+                    <p class="text-center text-muted"> Empty </p>
+                }
+            </div>
+        </div>
+    }
+
+</div>
+
+<script>
+    const pageLink = document.getElementById("task3");
+    pageLink.classList.add("current");
+</script>
