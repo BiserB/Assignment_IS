@@ -10,3 +10,5 @@ Tasks are described on the home screen.
 
 * [Microsoft.NETCore.App](https://dotnet.microsoft.com/download/dotnet-core/2.2) - ver 2.2.0
 * [Microsoft.AspNetCore.App](https://dotnet.microsoft.com/download/dotnet-core/2.2) - ver 2.2.0
+
+![Home Screen](/HomeScreen.jpg)
